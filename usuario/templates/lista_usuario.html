@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<div class="row pt-5">
+    <div class="col">
+        <h1>Lista de Usuarios</h1>
+    </div>
+    <div class="col align-self-end">
+        <a href="{% url "agregar_usuario" %}" class="btn btn-success bt-sm float-right">Agregar Usuario</a>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        {% if usuarios|length == 0 %}
+            <h4>No hay usuarios</h4>
+        {% else %}
+            <table class="table table-dark shadow r-click rounded-lg">
+                <thead>
+                    <th class="border-top-0">Nombre(s)</th>
+                    <th class="border-top-0">Apellido Paterno</th>
+                    <th class="border-top-0">Apellido Materno</th>
+                    <th class="border-top-0">Correo Electrónico</th>
+                    <th class="text-center border-top-0">Admin</th>
+                    <th class="text-center border-top-0">Opciones</th>
+                </thead>
+                <tbody>
+
+                    {% for usuario in usuarios %}
+                        <tr onclick="verDetalle({{usuario.id}})" class="clickable">
+                            <td>{{usuario.first_name}}</td>
+                            <td>{{usuario.last_name}}</td>
+                            <td>{{usuario.materno}}</td>
+                            <td>{{usuario.email}}</td>
+                            <td class="text-center">
+                                {% if usuario.is_superuser == 1 %}
+                                    Si
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url "modificar_usuario" usuario.id %}" class="btn btn-primary btn-sm mr-4">Editar</a>
+                                <a href="{% url "eliminar_usuario" usuario.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function verDetalle(id){
+
+        var url = "{% url 'ver_usuario' 3435 %}";
+
+        document.location.href = url.replace('3435', id);
+    }
+</script>
+
+{% endblock contenido %}

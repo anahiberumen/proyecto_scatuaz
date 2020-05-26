@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="card col-6 space shadow">
+        <div class="card-body">
+            <div class="text-center">
+                <h3 class="text-center d-inline">
+                    ¿Seguro que deseas eliminar al trabajador 
+                </h3>
+                <h3 class="resaltar text-center d-inline-block">
+                    {{ trabajador.nombre }} {{ trabajador.paterno }} {{ trabajador.materno }}
+                </h3>
+                <h3 class="text-center d-inline">
+                    con RFC
+                </h3>
+                <h3 class="resaltar text-center d-inline-block">
+                    {{ trabajador.rfc }}
+                </h3>
+                <h3 class="text-center d-inline">
+                    ?
+                </h3>
+            </div>
+            <form method="post" class="form">
+                {% csrf_token %}
+                <div class="d-flex justify-content-end pt-5">
+                    <input type="submit" value="Eliminar" class="btn btn-danger mr-2">
+                    <button
+                        onClick="javascript:history.go(-1);"
+                        class="btn btn-secondary"
+                    >
+                        Regresar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock contenido %}
+    

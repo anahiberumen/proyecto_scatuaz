@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<div class="row pt-5">
+    <div class="col">
+        <h1>Lista de Trabajadores</h1>
+    </div>
+    <div class="col align-self-end">
+        <a href="{% url "agregar_trabajador" %}" class="btn btn-success bt-sm float-right">Agregar Trabajador</a>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        {% if pagina|length == 0 %}
+            <h4>No hay registros</h4>
+        {% else %}
+            <table class="table table-dark rounded-lg shadow r-click">
+                <thead>
+                    <th class="border-top-0">Paterno</th>
+                    <th class="border-top-0">Materno</th>
+                    <th class="border-top-0">Nombre</th>
+                    <th class="border-top-0">RFC</th>
+                    <th class="text-center border-top-0">Opciones</th>
+                </thead>
+                <tbody>
+
+                    {% for trabajador in pagina %}
+                        <tr onclick="verDetalle({{trabajador.id}})" class="clickable">
+                            <td>{{trabajador.paterno}}</td>
+                            <td>{{trabajador.materno}}</td>
+                            <td>{{trabajador.nombre}}</td>
+                            <td>{{trabajador.rfc}}</td>
+                            <td class="text-center">
+                                <a href="{% url "modificar_trabajador" trabajador.id %}" class="btn btn-primary btn-sm mr-4">Editar</a>
+                                <a href="{% url "eliminar_trabajador" trabajador.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+            <!-- Paginator -->
+            {% if pagina.has_other_pages %}
+            <ul class="pagination justify-content-center">
+                <li class="page-item {% if not pagina.has_previous %}disabled{% endif %}">
+                    <a class="page-link"
+                    {% if pagina.has_previous %}
+                        href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+                    {% else %}
+                        tabindex="-1"
+                    {% endif %}
+                    >Primero</a>
+                </li>
+                {% if pagina.number > 1 %}    
+                <li class="page-item">
+                    <a class="page-link"
+                    {% if pagina.has_previous %}
+                        href="?page={{ pagina.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+                    {% else %}
+                        tabindex="-1"
+                    {% endif %}
+                    >{{ pagina.previous_page_number }}</a>
+                </li>
+                {% endif %}
+                    
+                <li class="page-item active">
+                    <span class="page-link">
+                        {{ pagina.number }}
+                        <span class="sr-only">(current)</span>
+                    </span>    
+                </li>
+
+                {% if pagina.has_next %}
+                <li class="page-item">
+                    <a class="page-link"
+                    {% if pagina.has_next %}
+                        href="?page={{ pagina.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+                    {% else %}
+                        tabindex="-1"
+                    {% endif %}
+                    >{{ pagina.next_page_number }}</a>
+                </li>
+                {% endif %}
+                <li class="page-item {% if not pagina.has_next %}disabled{% endif %}">
+                    <a class="page-link"
+                    {% if pagina.has_next %}
+                        href="?page={{ pagina.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+                    {% else %}
+                        tabindex="-1"
+                    {% endif %}
+                    >Último</a>
+                </li>
+            </ul>
+            {% endif %}
+            <!-- Paginator -->
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function verDetalle(id){
+
+        var url = "{% url 'ver_trabajador' 3435 %}";
+
+        document.location.href = url.replace('3435', id);
+    }
+</script>
+
+{% endblock contenido %}

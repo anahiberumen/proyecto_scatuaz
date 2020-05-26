@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<form method="post" class="form pt-3">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+        <ul class = 'form-errors list-unstyled'>
+            {% for error in form.non_field_errors %}
+                <li class = "text-danger"> {{error}} </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="row mb-2">
+                <div class="col">
+                    <h1 class="card-title mb-0">Nuevo Usuario</h1>
+                    <p class="text-info">Todos los campos con asterisco son obligatorio</p>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow">
+                <div class="card-header mb-3">
+                    <h4 class="card-title mb-0">Datos del Nuevo Usuario</h4>
+                </div>
+                <div class="card-body pb-0">
+                    
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-11">
+                            <label for="id_nombres">
+                                *{{form.first_name.label}}
+                            </label>
+                            {{form.first_name}}
+                            {% for error in form.first_name.errors %}
+                                <p class="text-warning text-center pb-0 mb-0">
+                                    {{error}}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-11">
+                            <label for="id_paterno">
+                                *{{form.last_name.label}}
+                            </label>
+                            {{form.last_name}}
+                            {% for error in form.last_name.errors %}
+                                <p class="text-warning text-center pb-0 mb-0">
+                                    {{error}}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-11">
+                            <label for="id_materno">
+                                *{{form.materno.label}}
+                            </label>
+                            {{form.materno}}
+                            {% for error in form.materno.errors %}
+                                <p class="text-warning text-center pb-0 mb-0">
+                                    {{error}}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-11">
+                            <label for="id_username">
+                                *{{form.username.label}}
+                            </label>
+                            {{form.username}}
+                            {% for error in form.username.errors %}
+                                <p class="text-warning text-center pb-0 mb-0">
+                                    {{error}}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-11">
+                            <label for="id_email">
+                                {{form.email.label}}
+                            </label>
+                            {{form.email}}
+                            {% for error in form.email.errors %}
+                                <p class="text-warning text-center pb-0 mb-0">
+                                    {{error}}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-11">
+                            <label for="id_password1">
+                                *{{form.password1.label}}
+                            </label>
+                            {{form.password1}}
+                            {% for error in form.password1.errors %}
+                                <p class="text-warning text-center pb-0 mb-0">
+                                    {{error}}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-11">
+                            <label for="id_password2">
+                                *{{form.password2.label}}
+                            </label>
+                            {{form.password2}}
+                            {% for error in form.password2.errors %}
+                                <p class="text-warning text-center pb-0 mb-0">
+                                    {{error}}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-center">
+                        <div class="col-11">
+                            <div class="form-inline justify-content-center mb-3 mt-1">
+                                {{form.is_superuser}}
+                                <label class="form-check-label" for="id_is_superuser">
+                                    {{form.is_superuser.label}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-row-reverse mb-3 mr-3 mt-2">
+                    <a href="{% url "lista_usuario" %}" class="btn btn-secondary ml-2 border">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+{% endblock contenido %}

@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/estilos.css" %}">
+    <title>
+        SCATUAZ
+    </title>
+</head>
+<body class="bg-grey">
+    {% block style %}{% endblock style %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'iniciar_sesion' %}"><h4>SCATUAZ</h4></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item {% if actual == 'trabajador' %} active {% endif %}">
+                        <a class="nav-link" href="{% url 'lista_trabajador' %}">Trabajadores</a>
+                    </li>
+                    {% if user.is_superuser %}    
+                    <li class="nav-item {% if actual == 'usuario' %} active {% endif %}">
+                        <a class="nav-link" href="{% if actual == 'usuario' %}#{% else %}{% url 'lista_usuario' %}{% endif %}">Usuarios</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cerrar_sesion' %}"><small>Cerrar Sesión</small></a>
+                    </li>
+                {% endif %}
+            </ul>
+            {% if user.is_authenticated %}
+                <form class="form-inline my-2 my-lg-0" method="GET">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Buscar Trabajador" name="q" value="{{ request.GET.q }}">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+                </form>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="container">
+        {% block contenido %}
+            
+        {% endblock contenido %}
+    </div>
+    <script src="{% static "js/jquery-3.3.1.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    {% block imports %}
+    {% endblock imports %}
+</body>
+</html>
